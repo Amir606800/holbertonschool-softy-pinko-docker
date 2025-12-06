@@ -1,0 +1,36 @@
+version: "3.9"
+
+services:
+  back-end:
+    build:
+      context: ./back-end
+      dockerfile: Dockerfile
+    image: softy-pinko-backend:task5
+    container_name: softy-pinko-backend
+    # No ports mapped to host; internal only
+    expose:
+      - "5252"
+
+  front-end:
+    build:
+      context: ./front-end
+      dockerfile: Dockerfile
+    image: softy-pinko-frontend:task5
+    container_name: softy-pinko-frontend
+    # No ports mapped to host; internal only
+    expose:
+      - "9000"
+
+  proxy:
+    image: nginx:latest
+    container_name: softy-pinko-proxy
+    build:
+      context: ./proxy
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    volumes:
+      - ./proxy/proxy.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - front-end
+      - back-end

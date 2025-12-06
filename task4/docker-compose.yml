@@ -1,0 +1,18 @@
+version: "3.9"
+
+services:
+  back-end:
+    build:
+      context: ./back-end
+      dockerfile: Dockerfile
+    container_name: softy-pinko-backend
+    ports:
+      - "5252:5252"
+
+  front-end:
+    build:
+      context: ./front-end
+      dockerfile: Dockerfile
+    container_name: softy-pinko-frontend
+    ports:
+      - "9000:9000"
